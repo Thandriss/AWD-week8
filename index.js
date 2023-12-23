@@ -19,6 +19,8 @@ mongoose.Promise = Promise;
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error"));
 
+let saveToken = new Set();
+
 
 const app  = express()
 const port  = 3000
@@ -79,7 +81,7 @@ function isAuth(req, res, next) {
     const token = req.headers["cookie"];
     console.log(token)
     console.log("checkAuth")
-    if (!token.isEmpty) {
+    if (!token.isEmpty || saveToken.has(token)) {
         next();
         return;
     }
@@ -148,6 +150,7 @@ async (req, res) => {
                     "AAABBBADA",
                     (err, token) => {
                         res.cookie('connect.sid', token)
+                        saveToken.add(token);
                         passport.authenticate('local')
                         res.send({"success": true, "token": token})
                     }
