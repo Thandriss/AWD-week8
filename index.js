@@ -81,7 +81,7 @@ function isAuth(req, res, next) {
     const token = req.headers["cookie"];
     console.log(token)
     console.log("checkAuth")
-    if (!token.isEmpty || saveToken.has(token)) {
+    if (token) {
         next();
         return;
     }
