@@ -36,11 +36,11 @@ app.use(passport.session())
 app.post("/api/user/register", 
 isNotAuth, 
 body("email").trim().escape(),
-// body("password").isLength({min: 8}),
-// body("password").matches('[0-9]').withMessage('Password Must Contain a Number'),
-// body("password").matches('[A-Z]').withMessage('Password Must Contain an Uppercase Letter'),
-// body("password").matches('[a-z]').withMessage('Password Must Contain an Lowercase Letter'),
-// body("password").matches('[~`!@#$%^&*()-_+={}[]|\;:"<>,./?]'),
+body("password").isLength({min: 8}),
+body("password").matches('[0-9]').withMessage('Password Must Contain a Number'),
+body("password").matches('[A-Z]').withMessage('Password Must Contain an Uppercase Letter'),
+body("password").matches('[a-z]').withMessage('Password Must Contain an Lowercase Letter'),
+body("password").matches('[~`!@#$%^&*()-_+={}[]|\;:"<>,./?]'),
 async (req , res ) => {
     const errors = validationResult(req);
     console.log(errors)
